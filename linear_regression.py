@@ -22,6 +22,7 @@ class LinearRegression:
         return X.T.dot(X.dot(self.theta) - y) / m
 
     def sgd(self, X, y):
+        ''' impement STOCHASTIC GD'''
         m = len(y)
         for _ in range(self.n_iterations):
             for i in range(m):
@@ -33,12 +34,14 @@ class LinearRegression:
             self.record_progress(X, y)
 
     def batch_gd(self, X, y):
+        ''' implement simple GD '''
         for _ in range(self.n_iterations):
             gradient = self.compute_gradient(X, y)
             self.theta -= self.learning_rate * gradient
             self.record_progress(X, y)
 
     def mini_batch_gd(self, X, y, batch_size=32):
+        ''' imlplement MINIBATCH GD '''
         m = len(y)
         for _ in range(self.n_iterations):
             for i in range(0, m, batch_size):
@@ -49,6 +52,7 @@ class LinearRegression:
             self.record_progress(X, y)
 
     def momentum_gd(self, X, y, momentum=0.9):
+        ''' implement MOMENTUM '''
         velocity = np.zeros_like(self.theta)
         for _ in range(self.n_iterations):
             gradient = self.compute_gradient(X, y)
@@ -57,6 +61,7 @@ class LinearRegression:
             self.record_progress(X, y)
 
     def adam(self, X, y, beta1=0.9, beta2=0.999, epsilon=1e-8):
+        ''' implement ADAM'''
         m = np.zeros_like(self.theta)
         v = np.zeros_like(self.theta)
         for t in range(1, self.n_iterations + 1):
@@ -69,6 +74,7 @@ class LinearRegression:
             self.record_progress(X, y)
 
     def rmsprop(self, X, y, decay_rate=0.9, epsilon=1e-8):
+        ''' implement RMSprop '''
         cache = np.zeros_like(self.theta)
         for _ in range(self.n_iterations):
             gradient = self.compute_gradient(X, y)
